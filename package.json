@@ -1,0 +1,22 @@
+{
+  "name": "meananimes",
+  "version": "1.0.0",
+  "description": "Personal Hobby Project (PHP)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "keywords": [
+    "MEAN",
+    "STACK"
+  ],
+  "author": "Adama Sorho",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.1.3",
+    "express": "^4.18.2",
+    "mongoose": "6.7.1",
+    "nodemon": "^2.0.22"
+  }
+}
