@@ -10,17 +10,17 @@ router.route("/")
 
 router.route("/:animeId")
   .get(animeController.findById)
-  .put(animeController.update)
+  .put(animeController.fullUpdate)
   .patch(animeController.partialUpdate)
   .delete(animeController.destroy);
 
 router.route("/:animeId/characters")
   .get(characterController.findAll)
-  .post(characterController.add);
+  .post(characterController.create);
 
 router.route("/:animeId/characters/:characterId")
   .get(characterController.findById)
-  .put(characterController.update)
+  .put(characterController.fullUpdate)
   .patch(characterController.partialUpdate)
   .delete(characterController.destroy);
 

@@ -1,13 +1,18 @@
 require("dotenv").config();
-require("./data/db");
+require("./api/data/db");
 const express = require("express");
-const animeRoutes = require("./routes/animeRoutes");
+const animeRoutes = require("./api/routes/animeRoutes");
 
 const app = express();
 
 app.use(express.json());
 app.use(function (req, res, next) {
   console.log(req.method, req.url);
+  next();
+});
+app.use(process.env.API, function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", process.env.FRONTENT_URL);
+  res.header("Access-Control-Allow-Methods", "DELETE");
   next();
 });
 app.use(`${process.env.API}/animes`, animeRoutes);

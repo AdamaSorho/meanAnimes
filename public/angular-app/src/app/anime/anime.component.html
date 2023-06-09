@@ -1,0 +1,9 @@
+<h2>{{ anime.title }}</h2>
+<p>
+  Release Year: {{ anime.releaseYear }} <br>
+  Release Country: {{ anime.releaseCountry }} <br>
+</p>
+<h4>Characters</h4>
+<ul>
+  <li *ngFor="let character of anime.characters">{{ character.name }}</li>
+</ul>
