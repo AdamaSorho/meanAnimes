@@ -3,7 +3,6 @@ const { setResponse, getResponse } = require("../utils/response");
 const { getAnimeWithCharacters, isCharacterFound, addCharacter, save, getCharacterById, setCharacterFields, removeCharacter, characterValidation, remove } = require("../services/characterService");
 const { exists } = require("../services/animeServices");
 
-const Anime = mongoose.model("Anime");
 
 const findAll = (req, res) => {
   getAnimeWithCharacters(req.params.animeId)
@@ -12,6 +11,8 @@ const findAll = (req, res) => {
     .catch((err) => setResponse(true, err.message, err.statusCode, []))
     .finally(() => res.status(getResponse().statusCode).json(getResponse()));
 };
+
+
 
 const findById = (req, res) => {
   getAnimeWithCharacters(req.params.animeId)

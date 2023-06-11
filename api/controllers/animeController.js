@@ -1,6 +1,6 @@
 const paginationValidation = require("../utils/pagination");
 const { setResponse, getResponse } = require("../utils/response");
-const { getAll, getById, exists, getByIdAndDelete, save, validation, updateOne, isUpdated, setAnimeFields } = require("../services/animeServices");
+const { getAll, getById, exists, getByIdAndDelete, save, validation, updateOne, isUpdated, setAnimeFields, getNumber } = require("../services/animeServices");
 
 
 const findAll = (req, res) => {
@@ -67,6 +67,13 @@ const partialUpdate = (req, res) => {
     .finally(() => res.status(getResponse().statusCode).json(getResponse()));
 };
 
+const findNumber = (req, res) => {
+  getNumber()
+    .then((number) => setResponse(false, "Number of animes", 200, number))
+    .catch((err) => setResponse(true, err.message, err.statusCode, null))
+    .finally(() => res.status(getResponse().statusCode).json(getResponse()));
+}
+
 
 module.exports = {
   findAll,
@@ -75,4 +82,5 @@ module.exports = {
   add,
   fullUpdate,
   partialUpdate,
+  findNumber,
 };

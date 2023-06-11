@@ -11,8 +11,14 @@ export class AnimeDataService {
 
   constructor(private _http: HttpClient) { }
 
-  getAnimes(): Observable<Response> {
-    const url = this._baseUrl;
+  getAnimes(offset: number, count: number): Observable<Response> {
+    const url = `${this._baseUrl}?offset=${offset}&count=${count}`;
+
+    return this._http.get<Response>(url);
+  }
+
+  getCount(): Observable<Response> {
+    const url = `${this._baseUrl}/count`;
 
     return this._http.get<Response>(url);
   }

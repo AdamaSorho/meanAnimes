@@ -8,6 +8,9 @@ router.route("/")
   .get(animeController.findAll)
   .post(animeController.add);
 
+router.route("/count")
+  .get(animeController.findNumber);
+
 router.route("/:animeId")
   .get(animeController.findById)
   .put(animeController.fullUpdate)

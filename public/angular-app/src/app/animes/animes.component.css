@@ -1,0 +1,16 @@
+.animeCard {
+  cursor: pointer;
+}
+
+.title {
+  position: relative;
+}
+
+.position-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.no-click { 
+  pointer-events: none;
+}

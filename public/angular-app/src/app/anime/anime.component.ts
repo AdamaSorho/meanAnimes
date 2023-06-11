@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Anime } from 'src/models/Anime';
 import { AnimeDataService } from '../anime-data.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-anime',
@@ -10,8 +10,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AnimeComponent implements OnInit {
   anime!: Anime;
+  error: boolean = false;
+  errorMessage!: string;
 
-  constructor(private _animeService: AnimeDataService, private _activatedRoute: ActivatedRoute) {}
+  constructor(
+    private _animeService: AnimeDataService, 
+    private _activatedRoute: ActivatedRoute,
+    private _router: Router) {}
 
   ngOnInit(): void {
     this._animeService.getAnime(this._activatedRoute.snapshot.params["animeId"]).subscribe(response => {
@@ -19,6 +24,17 @@ export class AnimeComponent implements OnInit {
         console.log("error", response.message);
       } else {
         this.anime = response.data;
+      }
+    });
+  }
+
+  deleteHandler() {
+    this._animeService.deleteAnime(this._activatedRoute.snapshot.params["animeId"]).subscribe((response) => {
+      if(response.error) {
+        this.error = true;
+        this.errorMessage = response.message;
+      } else {
+        this._router.navigate(["animes"]);
       }
     });
   }

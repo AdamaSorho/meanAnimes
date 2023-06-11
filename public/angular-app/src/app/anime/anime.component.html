@@ -1,9 +1,25 @@
-<h2>{{ anime.title }}</h2>
-<p>
-  Release Year: {{ anime.releaseYear }} <br>
-  Release Country: {{ anime.releaseCountry }} <br>
-</p>
-<h4>Characters</h4>
-<ul>
-  <li *ngFor="let character of anime.characters">{{ character.name }}</li>
-</ul>
+<div class="container">
+  <h2 class="mb-4 mt-4">{{ anime.title }}</h2>
+  <p>
+    <b>Release Year:</b> {{ anime.releaseYear }} <br>
+    <b>Release Country:</b> {{ anime.releaseCountry }} <br>
+  </p>
+  <h4>Characters: </h4>
+  <ul>
+    <li *ngFor="let character of anime.characters">
+      {{ character.name }} (Gender: {{ character.gender }})
+      <ul>
+        <li *ngFor="let skill of character.skills">Skill: {{ skill }}</li>
+      </ul>
+    </li>
+  </ul>
+
+  <div class="row">
+    <div class="col-md-3">
+      <button type="button" class="btn btn-primary">Edit</button>
+    </div>
+    <div class="col-md-3">
+      <button (click)="deleteHandler()" type="button" class="btn btn-danger">Delete</button>
+    </div>
+  </div>
+</div>

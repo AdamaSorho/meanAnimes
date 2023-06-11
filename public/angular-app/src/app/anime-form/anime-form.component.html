@@ -1,0 +1,67 @@
+<div class="container">
+  <h2 class="mb-4 mt-4 text-center">Add New Anime</h2>
+  <form *ngIf="isFormGroupLoaded" [formGroup]="animeFormGroup" (ngSubmit)="submitHandler()">
+    <div class="row form">
+      <div class="col-md-4">
+        <div class="form-group" [ngClass]="{
+          'has-success': title?.valid,
+          'has-danger': title?.invalid && (title?.touched || title?.dirty)
+        }">
+          <label class="form-label mt-4" for="title">Title</label>
+          <input type="text" formControlName="title" class="form-control" id="title" [ngClass]="{
+            'is-valid': title?.valid,
+            'is-invalid': title?.invalid && (title?.touched || title?.dirty)
+          }">
+          <div *ngIf="title?.invalid && (title?.touched || title?.dirty)" class="invalid-feedback">Sorry, title is
+            required.
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group" [ngClass]="{
+          'has-danger': releaseYear?.invalid && (releaseYear?.dirty || releaseYear?.touched),
+          'has-success': releaseYear?.valid && releaseYear?.touched
+        }">
+          <label class="form-label mt-4" for="releaseYear">Release Year</label>
+          <input type="text" formControlName="releaseYear" class="form-control" id="releaseYear" [ngClass]="{
+            'is-invalid': releaseYear?.invalid && (releaseYear?.dirty || releaseYear?.touched),
+            'is-valid': releaseYear?.valid && releaseYear?.touched
+          }">
+          <div *ngIf="releaseYear?.invalid && (releaseYear?.touched || releaseYear?.dirty)" class="invalid-feedback">
+            Sorry, release year must be a year</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group" [ngClass]="{
+          'has-danger': releaseCountry?.invalid && (releaseCountry?.dirty || releaseCountry?.touched),
+          'has-success': releaseCountry?.valid && releaseCountry?.touched
+        }">
+          <label class="form-label mt-4" for="releaseCountry">Release Country</label>
+          <input type="text" formControlName="releaseCountry" value="wrong value" class="form-control" [ngClass]="{
+            'is-invalid': releaseCountry?.invalid && (releaseCountry?.dirty || releaseCountry?.touched),
+            'is-valid': releaseCountry?.valid && releaseCountry?.touched
+          }" id="releaseCountry">
+          <div class="invalid-feedback"
+            *ngIf="releaseCountry?.invalid && (releaseCountry?.touched || releaseCountry?.dirty)">Sorry, release country
+            must at least 2 letter</div>
+        </div>
+      </div>
+
+      <div>
+        Je suis <label>
+          Skill
+
+          <select formControlName="skill" id="skill">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="col-md-2 mt-4 position-right">
+        <button [disabled]="animeFormGroup.invalid" type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -7,6 +7,10 @@ const getAll = function (offset, count) {
   return Anime.find().skip(offset).limit(count).exec();
 }
 
+const getNumber = function () {
+  return Anime.count().exec();
+}
+
 const getById = function (animeId) {
   return Anime.findById(animeId).exec();
 }
@@ -81,4 +85,5 @@ module.exports = {
   updateOne,
   isUpdated,
   setAnimeFields,
+  getNumber,
 }

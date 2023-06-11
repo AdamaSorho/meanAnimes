@@ -1,3 +1,46 @@
-<ul>
-  <li *ngFor="let anime of animes"> <a routerLink="/animes/{{ anime._id }}">{{ anime.title }}</a></li>
-</ul>
+<div class="container">
+  <h2 class="mb-4 mt-4 text-center title">
+    List of animes
+    <div class="col-md-2 position-right">
+      <button type="button" class="btn btn-primary" routerLink="/create-anime">Add</button>
+    </div>
+  </h2>
+  <div class="row mb-4">
+    <div class="col-md-2">
+      <div class="form-group">
+        <label for="count" class="form-label">Filter Size</label>
+        <select class="form-select" id="count" [(ngModel)]="count" (change)="countUpdateHandler()">
+          <option>1</option>
+          <option>2</option>
+          <option>5</option>
+          <option>10</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div *ngFor="let anime of animes" class="card bg-secondary mb-3 animeCard" routerLink="/animes/{{ anime._id }}">
+    <!-- <div class="card-header">Header</div> -->
+    <div class="card-body">
+      <h4 class="card-title">{{ anime.title }}</h4>
+      <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+        content.</p> -->
+    </div>
+  </div>
+  <div>
+    <ul class="pagination">
+      <li class="page-item" [ngClass]="{
+        'disabled': offset === 0,
+        'no-click': offset === 0
+      }" (click)="previous()">
+        <a class="page-link">Previous</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" (click)="next()" [ngClass]="{
+          'disabled': !isNext,
+          'no-click': !isNext
+        }">Next</a>
+      </li>
+    </ul>
+  </div>
+</div>
