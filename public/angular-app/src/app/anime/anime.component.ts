@@ -12,6 +12,7 @@ export class AnimeComponent implements OnInit {
   anime!: Anime;
   error: boolean = false;
   errorMessage!: string;
+  isAnimeLoad: boolean = false;
 
   constructor(
     private _animeService: AnimeDataService, 
@@ -25,6 +26,7 @@ export class AnimeComponent implements OnInit {
       } else {
         this.anime = response.data;
       }
+      this.isAnimeLoad = true;
     });
   }
 

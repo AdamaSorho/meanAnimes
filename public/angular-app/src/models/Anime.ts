@@ -1,3 +1,4 @@
+import { FormGroup } from "@angular/forms";
 import { Character } from "./Character";
 
 export class Anime {
@@ -19,8 +20,26 @@ export class Anime {
   set releaseCountry(releaseCountry: string) { this.#releaseCountry = releaseCountry; }
   set characters(characters: [Character]) { this.#characters = characters; }
 
-  constructor(_id: string, title: string) {
-    this._id = _id;
+  constructor(title: string) {
     this.title = title;
   } 
+ 
+  static fillFromFormGroup(form: FormGroup) {
+    const anime = new Anime(form.value.title);
+    anime.title = form.value.title;
+    anime.releaseYear = form.value.releaseYear;
+    anime.releaseCountry = form.value.releaseCountry;
+
+    return anime;
+  }
+
+  public JSON() {
+    return {
+      _id: this._id,
+      title: this.title,
+      releaseYear: this.releaseYear,
+      releaseCountry: this.releaseCountry,
+      characters: this.characters,
+    };
+  }
 }

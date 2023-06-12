@@ -13,6 +13,7 @@ export class AnimesComponent implements OnInit {
   count: number = 2;
   isNext: boolean = true;
   totalAnimes!: number;
+  // test: string = '2';
 
   constructor(private _animeService: AnimeDataService) {
     this.animes = new Array<Anime>();
@@ -68,4 +69,8 @@ export class AnimesComponent implements OnInit {
       this.isNext = true;
     }
   }
+
+  // testHandler() {
+  //   console.log("test", this.test);
+  // }
 }

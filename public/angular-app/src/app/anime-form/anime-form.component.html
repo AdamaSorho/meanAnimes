@@ -1,6 +1,10 @@
 <div class="container">
   <h2 class="mb-4 mt-4 text-center">Add New Anime</h2>
   <form *ngIf="isFormGroupLoaded" [formGroup]="animeFormGroup" (ngSubmit)="submitHandler()">
+    <div class="row">
+      <div *ngIf="error" class="alert alert-danger">{{errorMessage}}</div>
+      <div *ngIf="success" class="alert alert-success">{{successMessage}}</div>
+    </div>
     <div class="row form">
       <div class="col-md-4">
         <div class="form-group" [ngClass]="{
@@ -45,18 +49,6 @@
             *ngIf="releaseCountry?.invalid && (releaseCountry?.touched || releaseCountry?.dirty)">Sorry, release country
             must at least 2 letter</div>
         </div>
-      </div>
-
-      <div>
-        Je suis <label>
-          Skill
-
-          <select formControlName="skill" id="skill">
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-          </select>
-        </label>
       </div>
 
       <div class="col-md-2 mt-4 position-right">

@@ -17,6 +17,12 @@
         </select>
       </div>
     </div>
+    <!-- <div class="col-md-2">
+      <input type="radio" [(ngModel)]="test" value="1" (change)="testHandler()">
+      <input type="radio" [(ngModel)]="test" value="2" (change)="testHandler()">
+      <input type="radio" [(ngModel)]="test" value="5" (change)="testHandler()">
+      <input type="radio" [(ngModel)]="test" value="10" (change)="testHandler()">
+    </div> -->
   </div>
 
   <div *ngFor="let anime of animes" class="card bg-secondary mb-3 animeCard" routerLink="/animes/{{ anime._id }}">

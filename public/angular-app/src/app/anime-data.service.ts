@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Anime } from 'src/models/Anime';
 import { Response } from 'src/utils/Response';
 
 @Injectable({
@@ -33,5 +34,23 @@ export class AnimeDataService {
     const url = `${this._baseUrl}/${animeId}`;
 
     return this._http.delete<Response>(url);
+  }
+
+  saveAnime(anime: Anime): Observable<Response> {
+    const url = `${this._baseUrl}`;
+    
+    return this._http.post<Response>(url, anime.JSON());
+  }
+
+  fullUpdate(_id: string, anime: Anime): Observable<Response> {
+    const url = `${this._baseUrl}/${_id}`;
+
+    return this._http.put<Response>(url, anime.JSON());
+  }
+
+  partialUpdate(_id: string, anime: Anime): Observable<Response> {
+    const url = `${this._baseUrl}/${_id}`;
+    console.log("anime", anime.JSON());
+    return this._http.patch<Response>(url, anime.JSON());
   }
 }

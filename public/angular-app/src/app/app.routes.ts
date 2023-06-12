@@ -21,6 +21,10 @@ export const routes = [
     component: AnimeFormComponent,
   },
   {
+    path: "update-anime/:animeId",
+    component: AnimeFormComponent,
+  },
+  {
     path: "**",
     component: HomeComponent,
   },

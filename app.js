@@ -12,7 +12,8 @@ app.use(function (req, res, next) {
 });
 app.use(process.env.API, function (req, res, next) {
   res.header("Access-Control-Allow-Origin", process.env.FRONTENT_URL);
-  res.header("Access-Control-Allow-Methods", "DELETE");
+  res.header("Access-Control-Allow-Methods", "DELETE, PUT, PATCH");
+  res.header("Access-Control-Allow-Headers", "content-type")
   next();
 });
 app.use(`${process.env.API}/animes`, animeRoutes);
