@@ -1,0 +1,13 @@
+.position-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.m-r {
+  margin-right: 5px;
+}
+
+.title {
+  position: relative;
+}

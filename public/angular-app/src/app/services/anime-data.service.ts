@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Anime } from 'src/models/Anime';
 import { Response } from 'src/utils/Response';
 
@@ -8,18 +9,24 @@ import { Response } from 'src/utils/Response';
   providedIn: 'root'
 })
 export class AnimeDataService {
-  private _baseUrl = "http://localhost:3000/api/animes";
+  private _baseUrl = `${environment.BASE_URL}/animes`;
 
   constructor(private _http: HttpClient) { }
 
-  getAnimes(offset: number, count: number): Observable<Response> {
-    const url = `${this._baseUrl}?offset=${offset}&count=${count}`;
+  getAnimes(offset: number, count: number, search: string = ""): Observable<Response> {
+    let url = `${this._baseUrl}?offset=${offset}&count=${count}`;
+    if("" !== search) {
+      url += `&search=${search}`;
+    }
 
     return this._http.get<Response>(url);
   }
 
-  getCount(): Observable<Response> {
-    const url = `${this._baseUrl}/count`;
+  getCount(search: string = ""): Observable<Response> {
+    let url = `${this._baseUrl}/count`;
+    if("" !== search) {
+      url += `?search=${search}`;
+    }
 
     return this._http.get<Response>(url);
   }
@@ -50,7 +57,7 @@ export class AnimeDataService {
 
   partialUpdate(_id: string, anime: Anime): Observable<Response> {
     const url = `${this._baseUrl}/${_id}`;
-    console.log("anime", anime.JSON());
+
     return this._http.patch<Response>(url, anime.JSON());
   }
 }

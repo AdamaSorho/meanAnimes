@@ -1,8 +1,8 @@
 <div class="container">
   <h2 class="mb-4 mt-4 text-center title">
     List of animes
-    <div class="col-md-2 position-right">
-      <button type="button" class="btn btn-primary" routerLink="/create-anime">Add</button>
+    <div *ngIf="isLoggedIn()" class="col-md-2 position-right">
+      <button type="button" class="btn btn-primary" routerLink="/create-anime">+ Add</button>
     </div>
   </h2>
   <div class="row mb-4">
@@ -10,19 +10,12 @@
       <div class="form-group">
         <label for="count" class="form-label">Filter Size</label>
         <select class="form-select" id="count" [(ngModel)]="count" (change)="countUpdateHandler()">
-          <option>1</option>
           <option>2</option>
           <option>5</option>
           <option>10</option>
         </select>
       </div>
     </div>
-    <!-- <div class="col-md-2">
-      <input type="radio" [(ngModel)]="test" value="1" (change)="testHandler()">
-      <input type="radio" [(ngModel)]="test" value="2" (change)="testHandler()">
-      <input type="radio" [(ngModel)]="test" value="5" (change)="testHandler()">
-      <input type="radio" [(ngModel)]="test" value="10" (change)="testHandler()">
-    </div> -->
   </div>
 
   <div *ngFor="let anime of animes" class="card bg-secondary mb-3 animeCard" routerLink="/animes/{{ anime._id }}">

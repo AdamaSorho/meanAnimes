@@ -1,25 +1,98 @@
 <div *ngIf="isAnimeLoad" class="container">
-  <h2 class="mb-4 mt-4">{{ anime.title }}</h2>
+  <div class="row">
+    <div *ngIf="error" class="alert alert-danger">{{errorMessage}}</div>
+    <div *ngIf="success" class="alert alert-success">{{successMessage}}</div>
+  </div>
+  <h2 class="mb-4 mt-4 title">{{ anime.title }}
+    <button *ngIf="isLoggedIn()" class="btn btn-primary position-right" routerLink="/add-character/{{anime._id}}"> + Add
+      Character</button>
+
+  </h2>
   <p>
     <b>Release Year:</b> {{ anime.releaseYear }} <br>
     <b>Release Country:</b> {{ anime.releaseCountry }} <br>
   </p>
   <h4>Characters: </h4>
-  <ul>
-    <li *ngFor="let character of anime.characters">
-      {{ character.name }} (Gender: {{ character.gender }})
-      <ul>
-        <li *ngFor="let skill of character.skills">Skill: {{ skill }}</li>
-      </ul>
-    </li>
-  </ul>
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Gender</th>
+        <th scope="col">Skills</th>
+        <th *ngIf="isLoggedIn()" scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let character of anime.characters">
+        <th scope="row">{{ character.name }}</th>
+        <td>{{ character.gender }}</td>
+        <td>
+          <ul *ngFor="let skill of character.skills">
+            <li>{{ skill }}</li>
+          </ul>
+        </td>
+        <td *ngIf="isLoggedIn()">
+          <button type="button" class="btn btn-primary m-r"
+            routerLink="/update-character/{{anime._id}}/{{character._id}}">Edit
+            Character</button>
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+            attr.data-bs-target="#deleteCharacter-{{character._id}}">Delete
+            Character</button>
 
-  <div class="row">
+
+          <!-- Character's Modal Delete -->
+          <div class="modal fade" id="deleteCharacter-{{character._id}}" tabindex="-1"
+            attr.aria-labelledby="deleteCharacterLabel-{{character._id}}" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="deleteCharacterLabel-{{character._id}}">Delete {{character.name}}
+                  </h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Do you really want to delete this character?
+                </div>
+                <div class="modal-footer">
+                  <button #closeCharacterModal type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Cancel</button>
+                  <button type="button" (click)="deleteCharacterHandler(character._id)"
+                    class="btn btn-danger">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="isLoggedIn()" class="row">
     <div class="col-md-3">
-      <button type="button" class="btn btn-primary" routerLink="/update-anime/{{anime._id}}">Edit</button>
+      <button type="button" class="btn btn-primary" routerLink="/update-anime/{{anime._id}}">Edit Anime</button>
     </div>
-    <div class="col-md-3">
-      <button (click)="deleteHandler()" type="button" class="btn btn-danger">Delete</button>
+    <div class="offset-md-5 col-md-3">
+      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAnime">Delete
+        Anime</button>
+    </div>
+  </div>
+
+  <!-- Anime's Modal Delete -->
+  <div class="modal fade" id="deleteAnime" tabindex="-1" aria-labelledby="deleteAnimeLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="deleteAnimeLabel">Delete {{anime.title}}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Do you really want to delete this anime?
+        </div>
+        <div class="modal-footer">
+          <button #closeAnimeModal type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" (click)="deleteAnimeHandler()" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

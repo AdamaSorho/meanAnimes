@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Anime } from 'src/models/Anime';
-import { AnimeDataService } from '../anime-data.service';
+import { AnimeDataService } from '../services/anime-data.service';
+import { AuthenticationService } from '../services/authentication.service';
+import { SearchAnimeService } from '../services/search-anime.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-animes',
@@ -9,23 +12,30 @@ import { AnimeDataService } from '../anime-data.service';
 })
 export class AnimesComponent implements OnInit {
   animes!: Anime[];
-  offset: number = 0;
-  count: number = 2;
+  offset: number = parseInt(environment.DEFAULT_OFFSET);
+  count: number = parseInt(environment.DEFAULT_COUNT);
   isNext: boolean = true;
   totalAnimes!: number;
-  // test: string = '2';
+  search!: string;
 
-  constructor(private _animeService: AnimeDataService) {
+  constructor(private _animeService: AnimeDataService, 
+    private _authenticationService: AuthenticationService,
+    private _searchAnimeService: SearchAnimeService) {
     this.animes = new Array<Anime>();
   }
 
   ngOnInit(): void {
+    this.search = this._searchAnimeService.getSearch();
     this.getCount();
     this.getAnimes();
   }
 
+  isLoggedIn() {
+    return this._authenticationService.isLoggedIn();
+  }
+
   private getCount() {
-    this._animeService.getCount().subscribe(response => {
+    this._animeService.getCount(this.search).subscribe(response => {
       if(response.error) {
         console.log("Error", response.message);
       } else {
@@ -36,13 +46,17 @@ export class AnimesComponent implements OnInit {
 
   private getAnimes() {
     this.animes = new Array<Anime>();
-    this._animeService.getAnimes(this.offset, this.count).subscribe(response => {
+    if (!this.search) {
+      this.search = "";
+    }
+    this._animeService.getAnimes(this.offset, this.count, this.search).subscribe(response => {
       if(response.error) {
         console.log("error", response.message);
       } else {
         this.animes.push(...response.data);
       }
       this.updateNext();
+      this._searchAnimeService.setSearch("");
     });
   }
 
@@ -69,8 +83,4 @@ export class AnimesComponent implements OnInit {
       this.isNext = true;
     }
   }
-
-  // testHandler() {
-  //   console.log("test", this.test);
-  // }
 }

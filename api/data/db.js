@@ -1,18 +1,19 @@
 const mongoose = require("mongoose");
 require("../models/anime");
+require("../models/user");
 
 mongoose.connect(`${process.env.MONGODB_URL}/${process.env.DB_NAME}`);
 
 mongoose.connection.on("connected", function () {
-  console.log("Mongoose connected");
+  console.log(process.env.MONGODB_CONNECTION_MESSAGE);
 });
 
 mongoose.connection.on("disconnected", function () {
-  console.log("Mongoose disconnected to", process.env.DB_NAME);
+  console.log(process.env.MONGODB_DECONNECTION_MESSAGE);
 });
 
 mongoose.connection.on("error", function (error) {
-  console.log("Mongoose connection error", error);
+  console.log(process.env.MONGODB_CONNECTION_ERROR, error);
 });
 
 //App stopped by ctrl+c

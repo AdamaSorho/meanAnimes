@@ -1,0 +1,71 @@
+<div *ngIf="isFormGroupLoaded" class="container">
+  <h2 class="mb-4 mt-4 text-center">Add New Character to <b></b> Anime</h2>
+  <form *ngIf="isFormGroupLoaded" [formGroup]="characterFormGroup" (ngSubmit)="submitHandler()">
+    <div class="row">
+      <div *ngIf="error" class="alert alert-danger">{{errorMessage}}</div>
+      <div *ngIf="success" class="alert alert-success">{{successMessage}}</div>
+    </div>
+    <div class="row form">
+      <div class="col-md-6">
+        <div class="form-group" [ngClass]="{
+          'has-success': name?.valid,
+          'has-danger': name?.invalid && (name?.touched || name?.dirty)
+        }">
+          <label class="form-label" for="name">Title</label>
+          <input type="text" formControlName="name" class="form-control" id="name" [ngClass]="{
+            'is-valid': name?.valid,
+            'is-invalid': name?.invalid && (name?.touched || name?.dirty)
+          }">
+          <div *ngIf="name?.invalid && (name?.touched || name?.dirty)" class="invalid-feedback">
+            Sorry, name required and must be at least 2 letters.
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="gender" class="form-label">Gender</label>
+          <select class="form-select" id="gender" formControlName="gender">
+            <option value="">Select gender</option>
+            <option value="M">M</option>
+            <option value="F">F</option>
+          </select>
+        </div>
+        <div *ngIf="gender?.invalid && (gender?.touched || gender?.dirty)" class="invalid-feedback">
+          Sorry, gender is required
+        </div>
+      </div>
+    </div>
+    <div formArrayName="skills" class="row">
+      <ng-container *ngFor="let skill of skills.controls; let i=index">
+        <div class="col-md-3 mt-4">
+          <div class="form-group" [ngClass]="{
+            'has-success': skill?.valid,
+            'has-danger': skill?.invalid && (skill?.touched || skill?.dirty)
+          }">
+            <label class="form-label" for="skill-{{ i }}">Skill {{ i + 1 }}</label>
+            <input type="text" [formControlName]="i" class="form-control" id="skill-{{ i }}" [ngClass]="{
+              'is-valid': skill?.valid,
+              'is-invalid': skill?.invalid && (skill?.touched || skill?.dirty)
+            }">
+            <div *ngIf="skill?.invalid && (skill?.touched || skill?.dirty)" class="invalid-feedback">
+              Sorry, skill {{ i + 1 }} is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 mt-5">
+          <button type="button" (click)="removeSkill(i)" class="btn btn-warning">X Remove</button>
+        </div>
+      </ng-container>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-3">
+        <button type="button" (click)="addSkill()" class="btn btn-info">+ Add skill</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="offset-md-10 col-md-2 mt-4">
+        <button [disabled]="characterFormGroup.invalid" type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </form>
+</div>

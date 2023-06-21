@@ -1,30 +1,32 @@
 const express = require("express");
 const animeController = require("../controllers/animeController");
 const characterController = require("../controllers/characterController");
+const { authorization } = require("../middlewares/authorizationMiddleware");
 
 const router = express.Router();
 
 router.route("/")
   .get(animeController.findAll)
-  .post(animeController.add);
+  .post(authorization, animeController.add);
 
 router.route("/count")
   .get(animeController.findNumber);
 
 router.route("/:animeId")
   .get(animeController.findById)
-  .put(animeController.fullUpdate)
-  .patch(animeController.partialUpdate)
-  .delete(animeController.destroy);
+  .put(authorization, animeController.fullUpdate)
+  .patch(authorization, animeController.partialUpdate)
+  .delete(authorization, animeController.destroy);
 
 router.route("/:animeId/characters")
   .get(characterController.findAll)
-  .post(characterController.create);
+  .post(authorization, characterController.create);
 
 router.route("/:animeId/characters/:characterId")
   .get(characterController.findById)
-  .put(characterController.fullUpdate)
-  .patch(characterController.partialUpdate)
-  .delete(characterController.destroy);
+  .put(authorization, characterController.fullUpdate)
+  .patch(authorization, characterController.partialUpdate)
+  .delete(authorization, characterController.destroy);
+
 
 module.exports = router;

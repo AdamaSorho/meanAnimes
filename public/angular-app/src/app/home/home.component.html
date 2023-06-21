@@ -1,3 +1,4 @@
 <div class="container">
-  <h1 class="mb-4 mt-4 text-center">Welcome to my wonderful animes' world!</h1>
+  <h1 class="mb-4 mt-4 text-center">Welcome <span *ngIf="isLoggedIn()">{{ name }}</span> to your wonderful animes'
+    world!</h1>
 </div>

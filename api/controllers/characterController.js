@@ -7,7 +7,7 @@ const { exists } = require("../services/animeServices");
 const findAll = (req, res) => {
   getAnimeWithCharacters(req.params.animeId)
     .then((anime) => exists(anime))
-    .then((anime) => setResponse(false, "Character list", 200, anime.characters))
+    .then((anime) => setResponse(false, process.env.REST_API_CHARACTER_FIND_MESSAGE, 200, anime.characters))
     .catch((err) => setResponse(true, err.message, err.statusCode, []))
     .finally(() => res.status(getResponse().statusCode).json(getResponse()));
 };
@@ -30,7 +30,7 @@ const create = (req, res) => {
     .then((anime) => characterValidation(anime, req.body))
     .then((anime) => addCharacter(anime, req.body))
     .then((anime) => save(anime))
-    .then((anime) => setResponse(false, "Character created successfully", 200, anime.characters))
+    .then((anime) => setResponse(false, process.env.REST_API_CHARACTER_CREATE_MESSAGE, 200, anime.characters))
     .catch((err) => setResponse(true, err.message, err.statusCode, []))
     .finally(() => res.status(getResponse().statusCode).json(getResponse()));
 };
@@ -44,7 +44,7 @@ const fullUpdate = (req, res) => {
     .then((anime) => isCharacterFound(req.params.characterId, anime))
     .then((anime) => setCharacterFields(anime, req.params.characterId, req.body, isFullUpdate))
     .then((anime) => save(anime))
-    .then((anime) => setResponse(false, "Character updated successfully", 200, anime.characters))
+    .then((anime) => setResponse(false, process.env.REST_API_CHARACTER_UPDATE_MESSAGE, 200, anime.characters))
     .catch((err) => setResponse(true, err.message, err.statusCode, []))
     .finally(() => res.status(getResponse().statusCode).json(getResponse()));
 };
@@ -57,7 +57,7 @@ const partialUpdate = (req, res) => {
     .then((anime) => isCharacterFound(req.params.characterId, anime))
     .then((anime) => setCharacterFields(anime, req.params.characterId, req.body, isFullUpdate))
     .then((anime) => save(anime))
-    .then((anime) => setResponse(false, "Character updated successfully", 200, anime.characters))
+    .then((anime) => setResponse(false, process.env.REST_API_CHARACTER_UPDATE_MESSAGE, 200, anime.characters))
     .catch((err) => setResponse(true, err.message, err.statusCode, []))
     .finally(() => res.status(getResponse().statusCode).json(getResponse()));
 };
@@ -69,7 +69,7 @@ const destroy = (req, res) => {
     // .then((anime) => removeCharacter(req.params.characterId, anime))
     // .then((anime) => save(anime))
     .then((anime) => remove(anime._id, req.params.characterId))
-    .then((anime) => setResponse(false, "Character deleted successfully", 200, anime.characters))
+    .then((anime) => setResponse(false, process.env.REST_API_CHARACTER_DELETE_MESSAGE, 200, anime.characters))
     .catch((err) => setResponse(true, err.message, err.statusCode, []))
     .finally(() => res.status(getResponse().statusCode).json(getResponse()));
 };

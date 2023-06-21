@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Anime } from 'src/models/Anime';
-import { AnimeDataService } from '../anime-data.service';
+import { AnimeDataService } from '../services/anime-data.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -44,7 +44,6 @@ export class AnimeFormComponent implements OnInit {
 
   submitHandler() {
     const anime = Anime.fillFromFormGroup(this.animeFormGroup);
-
     if(this.animeId) {
       this.updateAnime(this.animeId, anime);
     } else {
@@ -65,6 +64,7 @@ export class AnimeFormComponent implements OnInit {
         this.errorMessage = "";
         this.success = true;
         this.successMessage = response.message;
+        this.animeFormGroup.reset();
       }
     });
   }

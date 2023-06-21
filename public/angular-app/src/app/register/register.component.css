@@ -1,0 +1,9 @@
+.position-right {
+  position: absolute;
+  right: 0;
+  top: 100%;
+}
+
+.form {
+  position: relative;
+}

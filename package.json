@@ -5,17 +5,21 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "startBackend": "nodemon app.js",
+    "startFrontend": "cd public/angular-app && npm start",
+    "start": "npm run startBackend | npm run startFrontend"
   },
   "keywords": [
     "MEAN",
-    "STACK"
+    "ANIME"
   ],
   "author": "Adama Sorho",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "dotenv": "^16.1.3",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.2.2",
     "nodemon": "^2.0.22"
   }

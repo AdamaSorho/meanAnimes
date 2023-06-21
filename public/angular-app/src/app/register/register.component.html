@@ -1,0 +1,70 @@
+<div class="container">
+  <h2 class="mb-4 mt-4 text-center">Create an Account</h2>
+  <form *ngIf="isFormGroupLoaded" [formGroup]="userFormGroup" (ngSubmit)="submitHandler()">
+    <div class="row">
+      <div *ngIf="error" class="alert alert-danger">{{errorMessage}}</div>
+      <div *ngIf="success" class="alert alert-success">{{successMessage}}</div>
+    </div>
+    <div class="row form">
+      <div class="col-md-3">
+        <div class="form-group" [ngClass]="{
+          'has-success': name?.valid && (name?.touched || name?.dirty),
+          'has-danger': name?.invalid && (name?.touched || name?.dirty)
+        }">
+          <label class="form-label mt-4" for="name">Name</label>
+          <input type="text" formControlName="name" class="form-control" id="name" [ngClass]="{
+            'is-valid': name?.valid && (name?.touched || name?.dirty),
+            'is-invalid': name?.invalid && (name?.touched || name?.dirty)
+          }">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group" [ngClass]="{
+          'has-danger': username?.invalid && (username?.dirty || username?.touched),
+          'has-success': username?.valid && username?.touched
+        }">
+          <label class="form-label mt-4" for="username">Username</label>
+          <input type="text" formControlName="username" class="form-control" id="username" [ngClass]="{
+            'is-invalid': username?.invalid && (username?.dirty || username?.touched),
+            'is-valid': username?.valid && username?.touched
+          }">
+          <div *ngIf="username?.invalid && (username?.touched || username?.dirty)" class="invalid-feedback">
+            Sorry, username is required</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group" [ngClass]="{
+          'has-danger': password?.invalid && (password?.dirty || password?.touched),
+          'has-success': password?.valid && password?.touched
+        }">
+          <label class="form-label mt-4" for="password">Password</label>
+          <input type="password" formControlName="password" class="form-control" [ngClass]="{
+            'is-invalid': password?.invalid && (password?.dirty || password?.touched),
+            'is-valid': password?.valid && password?.touched
+          }" id="password">
+          <div class="invalid-feedback" *ngIf="password?.invalid && (password?.touched || password?.dirty)">Sorry,
+            password is required</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group" [ngClass]="{
+          'has-danger': confirmPassword?.invalid && (confirmPassword?.dirty || password?.touched),
+          'has-success': confirmPassword?.valid && confirmPassword?.touched
+        }">
+          <label class="form-label mt-4" for="confirmPassword">Confirm password</label>
+          <input type="password" formControlName="confirmPassword" class="form-control" [ngClass]="{
+            'is-invalid': confirmPassword?.invalid && (confirmPassword?.dirty || confirmPassword?.touched),
+            'is-valid': confirmPassword?.valid && confirmPassword?.touched
+          }" id="confirmPassword">
+          <div class="invalid-feedback"
+            *ngIf="confirmPassword?.invalid && (confirmPassword?.touched || confirmPassword?.dirty)">Sorry,
+            confirmPassword is required and must match password</div>
+        </div>
+      </div>
+
+      <div class="col-md-2 mt-4 position-right">
+        <button [disabled]="userFormGroup.invalid" type="submit" class="btn btn-primary">Register</button>
+      </div>
+    </div>
+  </form>
+</div>

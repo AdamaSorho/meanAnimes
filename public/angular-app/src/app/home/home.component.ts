@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-home',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
+  constructor(private _authenticationService: AuthenticationService) {}
+
+  get name() {
+    return this._authenticationService.name;
+  }
+
+  isLoggedIn() {
+    return this._authenticationService.isLoggedIn();
+  }
 }

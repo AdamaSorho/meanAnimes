@@ -3,12 +3,12 @@ const { ObjectId } = require("bson");
 
 const Anime = mongoose.model("Anime");
 
-const getAll = function (offset, count) {
-  return Anime.find().skip(offset).limit(count).exec();
+const getAll = function (offset, count, search) {
+  return Anime.find(search).skip(offset).limit(count).exec();
 }
 
-const getNumber = function () {
-  return Anime.count().exec();
+const getNumber = function (search) {
+  return Anime.count(search).exec();
 }
 
 const getById = function (animeId) {
@@ -19,8 +19,8 @@ const exists = function (anime) {
   return new Promise((resolve, reject) => {
     if (null === anime) {
       const error = {
-        statusCode: 404,
-        message: "Anime cannot be found"
+        statusCode: process.env.REST_API_RESOURCE_NOT_FOUND_CODE,
+        message: process.env.REST_API_ANIME_FIND_ERROR_MESSAGE
       };
       reject(error);
     } else {
