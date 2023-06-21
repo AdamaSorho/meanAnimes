@@ -103,7 +103,6 @@ export class CharacterFormComponent implements OnInit {
 
   submitHandler() {
     const character = Character.fillFromFormGroup(this.characterFormGroup);
-    console.log("Character", character);
     if(this.currentCharacter) {
       this._characterService.partialUpdate(this.animeId, this.characterId, character).subscribe({
         next: (response) => {

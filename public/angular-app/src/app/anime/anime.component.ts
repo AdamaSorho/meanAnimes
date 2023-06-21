@@ -105,7 +105,6 @@ export class AnimeComponent implements OnInit {
           this.errorMessage = "";
           this.success = true;
           this.successMessage = response.message;
-          console.log("successMessage", response.message);
         }
       },
       error: (err) => {

@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const util = require("util");
 
-const User = mongoose.model("User");
+const User = mongoose.model(process.env.USER_MODEL);
 
 const create = function (newUser) {
   return User.create(newUser);
@@ -25,8 +25,8 @@ const exists = function (user) {
   return new Promise((resolve, reject) => {
     if (null === user) {
       const error = {
-        statusCode: 404,
-        message: "User cannot be found",
+        statusCode: process.env.REST_API_RESOURCE_NOT_FOUND_CODE,
+        message: process.env.REST_API_USER_FIND_ERROR_MESSAGE,
       };
       reject(error);
     } else {
@@ -43,8 +43,8 @@ const checkPassword = function (foundUser, requestPassword) {
           resolve(foundUser);
         } else {
           const error = {
-            statusCode: 404,
-            message: "User cannot be found",
+            statusCode: process.env.REST_API_RESOURCE_NOT_FOUND_CODE,
+            message: process.env.REST_API_USER_FIND_ERROR_MESSAGE,
           }
           reject(error);
         }

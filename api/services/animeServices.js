@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { ObjectId } = require("bson");
 
-const Anime = mongoose.model("Anime");
+const Anime = mongoose.model(process.env.ANIME_MODEL);
 
 const getAll = function (offset, count, search) {
   return Anime.find(search).skip(offset).limit(count).exec();
@@ -53,8 +53,8 @@ const isUpdated = function (acknowledgementResponse) {
   return new Promise((resolve, reject) => {
     if (acknowledgementResponse.matchedCount === 0) {
       const error = {
-        statusCode: 404,
-        message: "Anime cannot be found"
+        statusCode: process.env.REST_API_RESOURCE_NOT_FOUND_CODE,
+        message: process.env.REST_API_ANIME_FIND_ERROR_MESSAGE,
       };
       reject(error);
     }

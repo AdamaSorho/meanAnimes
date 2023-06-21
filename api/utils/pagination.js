@@ -10,7 +10,7 @@ const paginationValidation = function (req) {
   return new Promise((resolve, reject) => {
     if (offset < 0 || count > parseInt(process.env.DEFAULT_MAX_FIND_LIMIT) || count < 1) {
       const error = {
-        statusCode: 400,
+        statusCode: process.env.REST_API_RESOURCE_CLIENT_ERROR_CODE,
         message: process.env.PAGINATION_ERROR_MESSAGE,
       };
       reject(error);

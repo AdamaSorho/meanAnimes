@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const { ObjectId } = require("bson");
 
-const Anime = mongoose.model("Anime");
-const Character = mongoose.model("Character");
+const Anime = mongoose.model(process.env.ANIME_MODEL);
+const Character = mongoose.model(process.env.CHARACTER_MODEL);
 
 const getAnimeWithCharacters = function (animeId) {
-  return Anime.findById(animeId).select("characters").exec();
+  return Anime.findById(animeId).select(process.env.CHARACTER_COLLECTION).exec();
 };
 
 const isCharacterFound = function (characterId, anime) {
@@ -14,8 +14,8 @@ const isCharacterFound = function (characterId, anime) {
   return new Promise((resolve, reject) => {
     if (null === character) {
       const error = {
-        statusCode: 404,
-        message: "Character cannot be found",
+        statusCode: process.env.REST_API_RESOURCE_NOT_FOUND_CODE,
+        message: process.env.REST_API_CHARACTER_FIND_ERROR_MESSAGE,
       };
       reject(error);
     } else {
@@ -83,7 +83,7 @@ const characterValidation = function (anime, character) {
       .then(() => resolve(anime))
       .catch((err) => {
         const error = {
-          statusCode: 404,
+          statusCode: process.env.REST_API_RESOURCE_NOT_FOUND_CODE,
           message: err.message,
         };
         reject(error);
