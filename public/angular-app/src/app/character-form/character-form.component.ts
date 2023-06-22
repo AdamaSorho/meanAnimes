@@ -37,7 +37,6 @@ export class CharacterFormComponent implements OnInit {
       {
         next: (response) => {
           if(response.error) {
-            console.log("Error", response.message);
             this.error = true;
             this.errorMessage = response.message;
           } else {
@@ -107,7 +106,6 @@ export class CharacterFormComponent implements OnInit {
       this._characterService.partialUpdate(this.animeId, this.characterId, character).subscribe({
         next: (response) => {
           if(response.error) {
-            console.log("Next Error", response.message);
             this.error = true;
             this.errorMessage = response.message;
             this.success = false;
@@ -122,7 +120,7 @@ export class CharacterFormComponent implements OnInit {
         error: (err) => {
           console.log("Error", err)
           this.error = true;
-          this.errorMessage = err;
+          this.errorMessage = err.error.message;
           this.success = false;
           this.successMessage = "";
         },
@@ -132,7 +130,6 @@ export class CharacterFormComponent implements OnInit {
       this._characterService.add(this.animeId, character).subscribe({
         next: (response) => {
           if(response.error) {
-            console.log("Next Error", response.message);
             this.error = true;
             this.errorMessage = response.message;
             this.success = false;

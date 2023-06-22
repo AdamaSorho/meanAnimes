@@ -25,9 +25,12 @@ export class AnimesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.search = this._searchAnimeService.getSearch();
+    // this.search = this._searchAnimeService.getSearch();
     this.getCount();
-    this.getAnimes();
+    this._searchAnimeService.search$.subscribe((searchValue) => {
+      this.search = this._searchAnimeService.getSearch();
+      this.getAnimes();
+    });
   }
 
   isLoggedIn() {
@@ -46,17 +49,18 @@ export class AnimesComponent implements OnInit {
 
   private getAnimes() {
     this.animes = new Array<Anime>();
-    if (!this.search) {
-      this.search = "";
-    }
-    this._animeService.getAnimes(this.offset, this.count, this.search).subscribe(response => {
-      if(response.error) {
-        console.log("error", response.message);
-      } else {
-        this.animes.push(...response.data);
-      }
-      this.updateNext();
-      this._searchAnimeService.setSearch("");
+    
+    this._animeService.getAnimes(this.offset, this.count, this.search).subscribe({
+      next: response => {
+        if(response.error) {
+          console.log("error", response.message);
+        } else {
+          this.animes.push(...response.data);
+        }
+        this.updateNext();
+      },
+      error: (err) => console.log("Error", err.error.message),
+      complete: () => this._searchAnimeService.setSearch(""),
     });
   }
 

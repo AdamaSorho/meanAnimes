@@ -31,6 +31,12 @@ export class NavigationComponent {
 
   searchHandler() {
     this._searchAnimeService.setSearch(this.search);
+    this._searchAnimeService.search$.next(this.search);
     this._router.navigate(["animes"]);
+  }
+
+  navigateToAnimesPageHandler() {
+    this.search = "";
+    this.searchHandler();
   }
 }

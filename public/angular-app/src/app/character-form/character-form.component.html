@@ -1,5 +1,6 @@
 <div *ngIf="isFormGroupLoaded" class="container">
-  <h2 class="mb-4 mt-4 text-center">Add New Character to <b></b> Anime</h2>
+  <h2 *ngIf="!characterId" class="mb-4 mt-4 text-center">Add New Character to Anime</h2>
+  <h2 *ngIf="characterId" class="mb-4 mt-4 text-center">Edit Character</h2>
   <form *ngIf="isFormGroupLoaded" [formGroup]="characterFormGroup" (ngSubmit)="submitHandler()">
     <div class="row">
       <div *ngIf="error" class="alert alert-danger">{{errorMessage}}</div>

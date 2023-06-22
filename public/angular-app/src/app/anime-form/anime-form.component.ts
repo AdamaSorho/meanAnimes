@@ -52,20 +52,27 @@ export class AnimeFormComponent implements OnInit {
   }
 
   private saveAnime(anime: Anime) {
-    this._animeService.saveAnime(anime).subscribe(response => {
-      if(response.error) {
-        console.log("Error", response.message);
+    this._animeService.saveAnime(anime).subscribe({
+      next: response => {
+        if(response.error) {
+          this.error = true;
+          this.errorMessage = response.message;
+          this.success = false;
+          this.successMessage = "";
+        } else {
+          this.error = false;
+          this.errorMessage = "";
+          this.success = true;
+          this.successMessage = response.message;
+        }
+      },
+      error: (err) => {
         this.error = true;
-        this.errorMessage = response.message;
+        this.errorMessage = err.error.message;
         this.success = false;
         this.successMessage = "";
-      } else {
-        this.error = false;
-        this.errorMessage = "";
-        this.success = true;
-        this.successMessage = response.message;
-        this.animeFormGroup.reset();
-      }
+      },
+      complete: () => this.animeFormGroup.reset(),
     });
   }
 

@@ -74,7 +74,7 @@ export class RegisterComponent implements OnInit {
       },
       error: (err) => {
         this.error = true;
-          this.errorMessage = err;
+          this.errorMessage = err.error.message;
           this.success = false;
           this.successMessage = "";
       },
